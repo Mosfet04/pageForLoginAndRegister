@@ -23,6 +23,9 @@ class connectionToDB
             $this->row = $this->conn->query("SELECT email FROM users WHERE email = '$email'")->fetchAll();
             if (!isset($this->row[0]['email'])) {
                 try {
+                    $username = trim($username);
+                    $email = trim($email);
+                    $phone = trim($phone)
                     $sql = "INSERT INTO `users` (`username`,`pass`,`email`,`phoneNumber`) VALUES ('$username', '$pass','$email','$phone')";
                     $this->conn->exec($sql);
                     echo "<script>alert('Cadastro realizado com sucesso');window.location.href='http://localhost:8080/pageForUsersLog/index.html';</script>";
@@ -39,6 +42,7 @@ class connectionToDB
 
     public function verifyLogin($username, $pass)
     {
+        $username = trim($username);
         $this->row = $this->conn->query("SELECT username FROM users WHERE username = '$username' AND pass = '$pass'")->fetchAll();
         if (!isset($this->row[0]['username'])) {
             return 1;
